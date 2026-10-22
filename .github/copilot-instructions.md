@@ -71,7 +71,7 @@ Diagnostics are emitted as LSP-compatible JSON (`*_diagnostics.json`) alongside 
 
 ## Key Conventions
 
-- Rust edition 2024; uses `chumsky` for parsing inline Pulse expressions (`src/hauntedc.rs`).
+- Rust edition 2024; supports nightly-2024-10-20 via the edition preview and conditional `let_chains` feature, as well as stable Rust >= 1.88. Use `--locked` for reproducible builds. Uses `chumsky` for parsing inline Pulse expressions (`src/hauntedc.rs`).
 - The `pretty` crate is used for Pulse code emission with source range tracking.
 - Output file names are derived from input: `foo.c` → `Foo.fst` (first letter capitalized).
 - Test C files live in `test/<name>/<name>.c`; each must include `pal.h` and contain verification annotations.

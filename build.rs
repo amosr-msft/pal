@@ -8,7 +8,7 @@ fn llvm_config_flags(args: &[&str]) -> Vec<String> {
         .stdout
         .split(|c| c.is_ascii_whitespace())
         .filter(|flag| flag.len() > 0)
-        .map(|flag| str::from_utf8(flag).unwrap().into())
+        .map(|flag| std::str::from_utf8(flag).unwrap().into())
         .collect()
 }
 
@@ -25,6 +25,27 @@ fn take_until(s: &str, c: char) -> &str {
 }
 
 fn main() {
+    println!("cargo::rustc-check-cfg=cfg(pal_nightly_let_chains)");
+    let rustc = std::env::var_os("RUSTC").expect("Cargo must set RUSTC");
+    let version = Command::new(rustc)
+        .arg("--version")
+        .output()
+        .expect("Cannot query Rust compiler version");
+    assert!(
+        version.status.success(),
+        "Cannot query Rust compiler version"
+    );
+    let version = std::str::from_utf8(&version.stdout).expect("Invalid Rust compiler version");
+    let minor = version
+        .split_whitespace()
+        .nth(1)
+        .and_then(|v| v.split('.').nth(1))
+        .and_then(|v| v.parse::<u32>().ok())
+        .expect("Cannot parse Rust compiler version");
+    if minor < 88 {
+        println!("cargo::rustc-cfg=pal_nightly_let_chains");
+    }
+
     build_rs::output::rerun_if_changed("cpp/iface.zng");
     build_rs::output::rerun_if_changed("cpp/impl.cpp");
 
@@ -35,8 +56,15 @@ fn main() {
         .with_cpp_file(out_dir.join("generated.cpp"))
         .with_h_file(crate_dir.join("cpp/generated.h"))
         .with_rs_file(out_dir.join("generated.rs"))
-        .with_zng_header_in_place()
         .generate();
+
+    // Zngur 0.5 emits edition 2021 FFI syntax.
+    let generated_rs = out_dir.join("generated.rs");
+    let generated = std::fs::read_to_string(&generated_rs)
+        .expect("Cannot read generated Rust FFI")
+        .replace("#[no_mangle]", "#[unsafe(no_mangle)]")
+        .replace("extern \"C\" {", "unsafe extern \"C\" {");
+    std::fs::write(generated_rs, generated).expect("Cannot update generated Rust FFI");
 
     let mut build = cc::Build::new();
 

@@ -10,7 +10,7 @@
 ### Proof Annotated Language for C
 
 [![CI](https://github.com/FStarLang/pal/actions/workflows/ci.yml/badge.svg)](https://github.com/FStarLang/pal/actions/workflows/ci.yml)
-[![Rust 2024](https://img.shields.io/badge/Rust-2024_edition-DEA584.svg?logo=rust&logoColor=white)](https://www.rust-lang.org/)
+[![Rust nightly](https://img.shields.io/badge/Rust-nightly--2024--10--20-DEA584.svg?logo=rust&logoColor=white)](https://www.rust-lang.org/)
 [![Clang 20+](https://img.shields.io/badge/Clang-20%2B-262D3A.svg?logo=llvm&logoColor=white)](https://llvm.org/)
 [![F\*/Pulse](https://img.shields.io/badge/F*%2FPulse-verified-5B2D8E.svg)](https://github.com/FStarLang/pulse)
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
@@ -61,7 +61,7 @@ it passes, the implementation satisfies the spec. More availabe at [`examples/`]
 | Clang / LLVM | 20.x (CI uses `llvm.sh 20`, currently 20.1.8) | libclang parses C |
 | LLVM dev headers | 20.x | `llvm-config`, `libclang-cpp20-dev`, `libclang-20-dev` |
 | g++ | recent | builds the C++ FFI ([`cpp/impl.cpp`](cpp/impl.cpp)) |
-| Rust | 2024 edition | compiles the PAL binary |
+| Rust | nightly 2024-10-20 or stable >= 1.88 (edition 2024) | compiles the PAL binary |
 | F\*/Pulse | nightly 2026-10-14 | verifies generated `.fst` output |
 
 ### Setup (Ubuntu / Debian)
@@ -82,7 +82,24 @@ sudo apt install -y clang-20 libclang-cpp20-dev g++ clang-tools-20 libclang-20-d
 
 # Rust (skip if already installed)
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+rustup toolchain install nightly-2024-10-20
+rustup override set nightly-2024-10-20
 ```
+
+This compatibility branch supports the existing FunSDK builder toolchain.
+The manifest explicitly enables its edition 2024 preview. The build script
+enables nightly's `let_chains` feature only for compilers older than 1.88,
+where let chains were not yet stable. Stable Rust 1.88 and newer remain supported.
+Build reproducibly with `cargo build --locked --release`. Keep `Cargo.lock`:
+newer transitive dependencies can require a newer compiler even when the
+direct dependencies support this nightly. In particular, the lockfile keeps
+`psm` at 0.1.24 to avoid its newer archive-writer dependency.
+
+The FFI uses Zngur 0.5, the last release before its Rust 1.85 requirement.
+Its interface uses fully qualified paths instead of import aliases; the
+C++ namespace for local Rust types is `rust::crate`, and PAL supplies the
+Rust string literal helper that newer Zngur versions generate. The build
+script updates generated FFI attributes and extern blocks to edition 2024 syntax.
 
 `llvm-config` (or `llvm-config-20`) must be on `PATH` -- the build script
 calls it to find LLVM libraries.

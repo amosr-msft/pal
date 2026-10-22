@@ -1,11 +1,15 @@
+type () {
+    #layout(size=0, align=1);
+    wellknown_traits(Copy);
+}
+
 type str {
     wellknown_traits(?Sized);
     fn as_ptr(&self) -> *const u8;
     fn len(&self) -> usize;
 }
 
-use ::std::string::String as String;
-type String {
+type ::std::string::String {
     #only_by_ref;
     fn deref(&self) -> &str;
 }
@@ -15,111 +19,95 @@ type bool {
     wellknown_traits(Copy);
 }
 
-use ::num_bigint::BigInt as BigInt;
-use ::std::rc::Rc as Rc;
-use ::core::result::Result as Result;
-use ::core::option::Option as Option;
-use ::std::vec::Vec as Vec;
-use crate::ir::Ident as Ident;
-use crate::ir::SourceInfo as SourceInfo;
-use crate::ir::Type as Type;
-use crate::ir::Stmt as Stmt;
-use crate::ir::Expr as Expr;
-use crate::ir::MatchBranch as MatchBranch;
-use crate::ir::UnOp as UnOp;
-use crate::ir::BinOp as BinOp;
-use crate::ir::ParamMode as ParamMode;
-use crate::hauntedc::SnippetMap as SnippetMap;
-use crate::hauntedc::TargetIntWidths as TargetIntWidths;
 
-type Rc<str> {
+type ::std::rc::Rc<str> {
     #layout(size=16, align=8);
     fn deref(&self) -> &str;
-    fn clone(&self) -> Rc<str>;
+    fn clone(&self) -> ::std::rc::Rc<str>;
 }
 
-type BigInt { #only_by_ref; }
-type Rc<BigInt> { #layout(size=8, align=8); }
+type ::num_bigint::BigInt { #only_by_ref; }
+type ::std::rc::Rc<::num_bigint::BigInt> { #layout(size=8, align=8); }
 
 mod crate::ir {
-    type SourceInfo { #only_by_ref; }
-    type Ident { wellknown_traits(?Sized); }
-    type Type { #only_by_ref; }
-    type Expr { #only_by_ref; }
-    type Stmt { #only_by_ref; }
-    type MatchBranch { #only_by_ref; }
+    type crate::ir::SourceInfo { #only_by_ref; }
+    type crate::ir::Ident { wellknown_traits(?Sized); }
+    type crate::ir::Type { #only_by_ref; }
+    type crate::ir::Expr { #only_by_ref; }
+    type crate::ir::Stmt { #only_by_ref; }
+    type crate::ir::MatchBranch { #only_by_ref; }
 
-    type Rc<SourceInfo> {
+    type ::std::rc::Rc<crate::ir::SourceInfo> {
         #layout(size=8, align=8);
-        fn deref(&self) -> &SourceInfo;
-        fn clone(&self) -> Rc<SourceInfo>;
+        fn deref(&self) -> &crate::ir::SourceInfo;
+        fn clone(&self) -> ::std::rc::Rc<crate::ir::SourceInfo>;
     }
 
-    type Rc<Expr> {
+    type ::std::rc::Rc<crate::ir::Expr> {
         #layout(size=8, align=8);
-        fn deref(&self) -> &Expr;
-        fn clone(&self) -> Rc<Expr>;
+        fn deref(&self) -> &crate::ir::Expr;
+        fn clone(&self) -> ::std::rc::Rc<crate::ir::Expr>;
     }
 
-    type Vec<Rc<Expr>> {
+    type ::std::vec::Vec<::std::rc::Rc<crate::ir::Expr>> {
         #heap_allocated;
-        fn new() -> Vec<Rc<Expr>>;
-        fn push(&mut self, Rc<Expr>);
+        fn new() -> ::std::vec::Vec<::std::rc::Rc<crate::ir::Expr>>;
+        fn push(&mut self, ::std::rc::Rc<crate::ir::Expr>);
     }
 
-    type Vec<Rc<Type>> {
+    type ::std::vec::Vec<::std::rc::Rc<crate::ir::Type>> {
         #heap_allocated;
-        fn new() -> Vec<Rc<Type>>;
-        fn push(&mut self, Rc<Type>);
+        fn new() -> ::std::vec::Vec<::std::rc::Rc<crate::ir::Type>>;
+        fn push(&mut self, ::std::rc::Rc<crate::ir::Type>);
     }
 
-    type Option<Rc<Expr>> {
+    type ::core::option::Option<::std::rc::Rc<crate::ir::Expr>> {
         #layout(size=8, align=8);
         constructor None;
-        constructor Some(Rc<Expr>);
+        constructor Some(::std::rc::Rc<crate::ir::Expr>);
     }
 
-    type Rc<Stmt> {
+    type ::std::rc::Rc<crate::ir::Stmt> {
         #layout(size=8, align=8);
-        fn deref(&self) -> &Stmt;
+        fn deref(&self) -> &crate::ir::Stmt;
     }
 
-    type Vec<Rc<Stmt>> {
+    type ::std::vec::Vec<::std::rc::Rc<crate::ir::Stmt>> {
         #heap_allocated;
-        fn new() -> Vec<Rc<Stmt>>;
-        fn push(&mut self, Rc<Stmt>);
+        fn new() -> ::std::vec::Vec<::std::rc::Rc<crate::ir::Stmt>>;
+        fn push(&mut self, ::std::rc::Rc<crate::ir::Stmt>);
     }
 
-    type Rc<MatchBranch> {
+    type ::std::rc::Rc<crate::ir::MatchBranch> {
         #layout(size=8, align=8);
     }
 
-    type Vec<Rc<MatchBranch>> {
+    type ::std::vec::Vec<::std::rc::Rc<crate::ir::MatchBranch>> {
         #heap_allocated;
-        fn new() -> Vec<Rc<MatchBranch>>;
-        fn push(&mut self, Rc<MatchBranch>);
+        fn new() -> ::std::vec::Vec<::std::rc::Rc<crate::ir::MatchBranch>>;
+        fn push(&mut self, ::std::rc::Rc<crate::ir::MatchBranch>);
     }
 
-    type Rc<Type> {
+    type ::std::rc::Rc<crate::ir::Type> {
         #layout(size=8, align=8);
-        fn deref(&self) -> &Type;
-        fn clone(&self) -> Rc<Type>;
+        fn deref(&self) -> &crate::ir::Type;
+        fn clone(&self) -> ::std::rc::Rc<crate::ir::Type>;
     }
 
-    type Rc<Ident> {
+    type ::std::rc::Rc<crate::ir::Ident> {
         #layout(size=8, align=8);
-        fn deref(&self) -> &Ident;
-        fn clone(&self) -> Rc<Ident>;
+        fn deref(&self) -> &crate::ir::Ident;
+        fn clone(&self) -> ::std::rc::Rc<crate::ir::Ident>;
     }
 
-    type UnOp {
+    type crate::ir::UnOp {
         #layout(size=1, align=1);
         constructor Not;
         constructor Neg;
         constructor BitNot;
     }
 
-    type BinOp {
+    type crate::ir::BinOp {
         #layout(size=1, align=1);
         constructor Eq;
         constructor LEq;
@@ -140,7 +128,7 @@ mod crate::ir {
         constructor Elvis;
     }
 
-    type ParamMode {
+    type crate::ir::ParamMode {
         #layout(size=1, align=1);
         constructor Regular;
         constructor Consumed;
@@ -149,33 +137,32 @@ mod crate::ir {
     }
 }
 
-type SnippetMap {
+type crate::hauntedc::SnippetMap {
     #heap_allocated;
-    fn default() -> SnippetMap;
+    fn default() -> crate::hauntedc::SnippetMap;
 }
 
-type TargetIntWidths {
+type crate::hauntedc::TargetIntWidths {
     #layout(size=20, align=4);
     wellknown_traits(Copy);
     constructor { char_width: u32, short_width: u32, int_width: u32, long_width: u32, long_long_width: u32 };
 }
 
-use crate::vfs::VFSEntry as VFSEntry;
 mod crate::vfs {
-    type VFSEntry {
+    type crate::vfs::VFSEntry {
         #only_by_ref;
         fn get_file_name(&self) -> &str;
         fn get_contents(&self) -> &str;
     }
-    type Rc<VFSEntry> {
+    type ::std::rc::Rc<crate::vfs::VFSEntry> {
         #layout(size=8, align=8);
-        fn deref(&self) -> &VFSEntry;
-        fn clone(&self) -> Rc<VFSEntry>;
+        fn deref(&self) -> &crate::vfs::VFSEntry;
+        fn clone(&self) -> ::std::rc::Rc<crate::vfs::VFSEntry>;
     }
-    type Result<Rc<VFSEntry>, String> {
+    type ::core::result::Result<::std::rc::Rc<crate::vfs::VFSEntry>, ::std::string::String> {
         #heap_allocated;
         fn is_ok(&self) -> bool;
-        fn unwrap(self) -> Rc<VFSEntry>;
+        fn unwrap(self) -> ::std::rc::Rc<crate::vfs::VFSEntry>;
     }
 }
 
@@ -191,159 +178,159 @@ mod crate::clang {
         fn get_define_count(&self) -> usize;
         fn get_define(&self, usize) -> &str;
 
-        fn set_target_int_widths(&mut self, TargetIntWidths);
+        fn set_target_int_widths(&mut self, crate::hauntedc::TargetIntWidths);
 
-        fn intern_str(&mut self, &str) -> Rc<str>;
+        fn intern_str(&mut self, &str) -> ::std::rc::Rc<str>;
 
-        fn mk_ident(&mut self, &str, Rc<SourceInfo>) -> Rc<Ident>;
+        fn mk_ident(&mut self, &str, ::std::rc::Rc<crate::ir::SourceInfo>) -> ::std::rc::Rc<crate::ir::Ident>;
 
         fn add_fn_decl(&mut self, DeclBuilder);
-        fn add_fn_defn(&mut self, DeclBuilder, Vec<Rc<Stmt>>);
-        fn add_typedef(&mut self, Rc<SourceInfo>, Rc<Ident>, Rc<Type>, bool);
+        fn add_fn_defn(&mut self, DeclBuilder, ::std::vec::Vec<::std::rc::Rc<crate::ir::Stmt>>);
+        fn add_typedef(&mut self, ::std::rc::Rc<crate::ir::SourceInfo>, ::std::rc::Rc<crate::ir::Ident>, ::std::rc::Rc<crate::ir::Type>, bool);
         fn add_struct(&mut self, DeclBuilder);
-        fn add_struct_decl(&mut self, Rc<SourceInfo>, Rc<Ident>);
+        fn add_struct_decl(&mut self, ::std::rc::Rc<crate::ir::SourceInfo>, ::std::rc::Rc<crate::ir::Ident>);
         fn add_union(&mut self, DeclBuilder);
-        fn add_global_var(&mut self, Rc<SourceInfo>, Rc<Ident>, Rc<Type>, Option<Rc<Expr>>, bool, bool, bool, bool);
-        fn add_include(&mut self, Rc<SourceInfo>, &str, u32, &SnippetMap);
-        fn add_let_decl(&mut self, Rc<SourceInfo>, bool, u32, u32, &SnippetMap);
-        fn add_letimpure_decl(&mut self, Rc<SourceInfo>, u32, u32, &SnippetMap);
-        fn add_type_decl(&mut self, Rc<SourceInfo>, u32, u32, &SnippetMap);
+        fn add_global_var(&mut self, ::std::rc::Rc<crate::ir::SourceInfo>, ::std::rc::Rc<crate::ir::Ident>, ::std::rc::Rc<crate::ir::Type>, ::core::option::Option<::std::rc::Rc<crate::ir::Expr>>, bool, bool, bool, bool);
+        fn add_include(&mut self, ::std::rc::Rc<crate::ir::SourceInfo>, &str, u32, &crate::hauntedc::SnippetMap);
+        fn add_let_decl(&mut self, ::std::rc::Rc<crate::ir::SourceInfo>, bool, u32, u32, &crate::hauntedc::SnippetMap);
+        fn add_letimpure_decl(&mut self, ::std::rc::Rc<crate::ir::SourceInfo>, u32, u32, &crate::hauntedc::SnippetMap);
+        fn add_type_decl(&mut self, ::std::rc::Rc<crate::ir::SourceInfo>, u32, u32, &crate::hauntedc::SnippetMap);
 
-        fn mk_ghost_stmt(&mut self, Rc<SourceInfo>, u32, &SnippetMap) -> Rc<Stmt>;
-        fn parse_ghost_arg(&mut self, &mut DeclBuilder, Rc<SourceInfo>, u32, &SnippetMap);
+        fn mk_ghost_stmt(&mut self, ::std::rc::Rc<crate::ir::SourceInfo>, u32, &crate::hauntedc::SnippetMap) -> ::std::rc::Rc<crate::ir::Stmt>;
+        fn parse_ghost_arg(&mut self, &mut DeclBuilder, ::std::rc::Rc<crate::ir::SourceInfo>, u32, &crate::hauntedc::SnippetMap);
 
-        fn parse_rvalue(&mut self, Rc<SourceInfo>, u32, &SnippetMap) -> Rc<Expr>;
+        fn parse_rvalue(&mut self, ::std::rc::Rc<crate::ir::SourceInfo>, u32, &crate::hauntedc::SnippetMap) -> ::std::rc::Rc<crate::ir::Expr>;
 
-        fn report_diag(&mut self, Rc<SourceInfo>, bool, &str);
+        fn report_diag(&mut self, ::std::rc::Rc<crate::ir::SourceInfo>, bool, &str);
 
-        fn read_vfs_file(&mut self, &str) -> Result<Rc<VFSEntry>, String>;
+        fn read_vfs_file(&mut self, &str) -> ::core::result::Result<::std::rc::Rc<crate::vfs::VFSEntry>, ::std::string::String>;
     }
 
     type DeclBuilder {
         #heap_allocated;
-        fn new(Rc<SourceInfo>, Rc<Ident>) -> DeclBuilder;
-        fn return_type(&mut self, Rc<Type>);
-        fn arg(&mut self, Rc<Ident>, Rc<Type>, ParamMode);
-        fn arg_anon(&mut self, Rc<Type>, ParamMode);
-        fn field(&mut self, Rc<Ident>, Rc<Type>);
-        fn field_bitfield(&mut self, Rc<Ident>, Rc<Type>, u32);
-        fn refines(&mut self, Rc<Type>);
-        fn ghost_arg(&mut self, Rc<Ident>, Rc<Type>);
-        fn requires(&mut self, Rc<Expr>);
-        fn ensures(&mut self, Rc<Expr>);
+        fn new(::std::rc::Rc<crate::ir::SourceInfo>, ::std::rc::Rc<crate::ir::Ident>) -> DeclBuilder;
+        fn return_type(&mut self, ::std::rc::Rc<crate::ir::Type>);
+        fn arg(&mut self, ::std::rc::Rc<crate::ir::Ident>, ::std::rc::Rc<crate::ir::Type>, crate::ir::ParamMode);
+        fn arg_anon(&mut self, ::std::rc::Rc<crate::ir::Type>, crate::ir::ParamMode);
+        fn field(&mut self, ::std::rc::Rc<crate::ir::Ident>, ::std::rc::Rc<crate::ir::Type>);
+        fn field_bitfield(&mut self, ::std::rc::Rc<crate::ir::Ident>, ::std::rc::Rc<crate::ir::Type>, u32);
+        fn refines(&mut self, ::std::rc::Rc<crate::ir::Type>);
+        fn ghost_arg(&mut self, ::std::rc::Rc<crate::ir::Ident>, ::std::rc::Rc<crate::ir::Type>);
+        fn requires(&mut self, ::std::rc::Rc<crate::ir::Expr>);
+        fn ensures(&mut self, ::std::rc::Rc<crate::ir::Expr>);
         fn set_pure(&mut self);
         fn set_rec(&mut self);
         fn set_total(&mut self);
         fn set_eager_unfold_pred(&mut self);
-        fn decreases(&mut self, Rc<Expr>);
+        fn decreases(&mut self, ::std::rc::Rc<crate::ir::Expr>);
     }
 
     type InlineCodeBuilder {
         #heap_allocated;
         fn new() -> InlineCodeBuilder;
-        fn push_token(&mut self, &str, Rc<SourceInfo>, &str);
-        fn insert_into_map(self, u32, &mut SnippetMap);
+        fn push_token(&mut self, &str, ::std::rc::Rc<crate::ir::SourceInfo>, &str);
+        fn insert_into_map(self, u32, &mut crate::hauntedc::SnippetMap);
     }
 
     type StructInitBuilder {
         #heap_allocated;
-        fn new(Rc<SourceInfo>, Rc<Ident>) -> StructInitBuilder;
-        fn field(&mut self, Rc<Ident>, Rc<Expr>);
-        fn build(self) -> Rc<Expr>;
+        fn new(::std::rc::Rc<crate::ir::SourceInfo>, ::std::rc::Rc<crate::ir::Ident>) -> StructInitBuilder;
+        fn field(&mut self, ::std::rc::Rc<crate::ir::Ident>, ::std::rc::Rc<crate::ir::Expr>);
+        fn build(self) -> ::std::rc::Rc<crate::ir::Expr>;
     }
 
-    fn mk_union_init(Rc<SourceInfo>, Rc<Ident>, Rc<Ident>, Rc<Expr>) -> Rc<Expr>;
-    fn mk_array_init(Rc<SourceInfo>, Rc<Type>, Vec<Rc<Expr>>, bool) -> Rc<Expr>;
+    fn mk_union_init(::std::rc::Rc<crate::ir::SourceInfo>, ::std::rc::Rc<crate::ir::Ident>, ::std::rc::Rc<crate::ir::Ident>, ::std::rc::Rc<crate::ir::Expr>) -> ::std::rc::Rc<crate::ir::Expr>;
+    fn mk_array_init(::std::rc::Rc<crate::ir::SourceInfo>, ::std::rc::Rc<crate::ir::Type>, ::std::vec::Vec<::std::rc::Rc<crate::ir::Expr>>, bool) -> ::std::rc::Rc<crate::ir::Expr>;
 
     fn str_from_parts(*const u8, usize) -> &str;
 
-    fn mk_original_location(Rc<str>, u32, u32, u32, u32) -> Rc<SourceInfo>;
-    fn mk_fallback_sourceinfo(&Rc<SourceInfo>) -> Rc<SourceInfo>;
+    fn mk_original_location(::std::rc::Rc<str>, u32, u32, u32, u32) -> ::std::rc::Rc<crate::ir::SourceInfo>;
+    fn mk_fallback_sourceinfo(&::std::rc::Rc<crate::ir::SourceInfo>) -> ::std::rc::Rc<crate::ir::SourceInfo>;
 
-    fn mk_void_type(Rc<SourceInfo>) -> Rc<Type>;
-    fn mk_bool_type(Rc<SourceInfo>) -> Rc<Type>;
-    fn mk_int_type(Rc<SourceInfo>, bool, u32) -> Rc<Type>;
-    fn mk_float_type(Rc<SourceInfo>, u32) -> Rc<Type>;
-    fn mk_sizet(Rc<SourceInfo>) -> Rc<Type>;
-    fn mk_pointer_unknown(Rc<SourceInfo>, Rc<Type>) -> Rc<Type>;
-    fn mk_pointer_array(Rc<SourceInfo>, Rc<Type>) -> Rc<Type>;
-    fn mk_fixed_array_type(Rc<SourceInfo>, Rc<Type>, u64) -> Rc<Type>;
-    fn mk_flex_array_type(Rc<SourceInfo>, Rc<Type>) -> Rc<Type>;
-    fn mk_type_fnptr(Rc<SourceInfo>, Vec<Rc<Type>>, Rc<Type>) -> Rc<Type>;
-    fn mk_type_struct(Rc<SourceInfo>, Rc<Ident>) -> Rc<Type>;
-    fn mk_type_union(Rc<SourceInfo>, Rc<Ident>) -> Rc<Type>;
-    fn mk_type_typedef(Rc<SourceInfo>, Rc<Ident>) -> Rc<Type>;
-    fn mk_type_refine(Rc<SourceInfo>, Rc<Type>, Rc<Expr>) -> Rc<Type>;
-    fn mk_type_refine_always(Rc<SourceInfo>, Rc<Type>, Rc<Expr>) -> Rc<Type>;
-    fn mk_type_refine_uninit(Rc<SourceInfo>, Rc<Type>, Rc<Expr>) -> Rc<Type>;
-    fn mk_type_refine_value(Rc<SourceInfo>, Rc<Type>, u32, u32, &SnippetMap) -> Rc<Type>;
-    fn mk_type_plain(Rc<SourceInfo>, Rc<Type>) -> Rc<Type>;
-    fn mk_type_nullable(Rc<SourceInfo>, Rc<Type>) -> Rc<Type>;
-    fn mk_type_array(Rc<SourceInfo>, Rc<Type>) -> Rc<Type>;
-    fn mk_type_arrayptr(Rc<SourceInfo>, Rc<Type>) -> Rc<Type>;
-    fn mk_type_core_ref(Rc<SourceInfo>, Rc<Type>) -> Rc<Type>;
-    fn mk_type_err(Rc<SourceInfo>) -> Rc<Type>;
+    fn mk_void_type(::std::rc::Rc<crate::ir::SourceInfo>) -> ::std::rc::Rc<crate::ir::Type>;
+    fn mk_bool_type(::std::rc::Rc<crate::ir::SourceInfo>) -> ::std::rc::Rc<crate::ir::Type>;
+    fn mk_int_type(::std::rc::Rc<crate::ir::SourceInfo>, bool, u32) -> ::std::rc::Rc<crate::ir::Type>;
+    fn mk_float_type(::std::rc::Rc<crate::ir::SourceInfo>, u32) -> ::std::rc::Rc<crate::ir::Type>;
+    fn mk_sizet(::std::rc::Rc<crate::ir::SourceInfo>) -> ::std::rc::Rc<crate::ir::Type>;
+    fn mk_pointer_unknown(::std::rc::Rc<crate::ir::SourceInfo>, ::std::rc::Rc<crate::ir::Type>) -> ::std::rc::Rc<crate::ir::Type>;
+    fn mk_pointer_array(::std::rc::Rc<crate::ir::SourceInfo>, ::std::rc::Rc<crate::ir::Type>) -> ::std::rc::Rc<crate::ir::Type>;
+    fn mk_fixed_array_type(::std::rc::Rc<crate::ir::SourceInfo>, ::std::rc::Rc<crate::ir::Type>, u64) -> ::std::rc::Rc<crate::ir::Type>;
+    fn mk_flex_array_type(::std::rc::Rc<crate::ir::SourceInfo>, ::std::rc::Rc<crate::ir::Type>) -> ::std::rc::Rc<crate::ir::Type>;
+    fn mk_type_fnptr(::std::rc::Rc<crate::ir::SourceInfo>, ::std::vec::Vec<::std::rc::Rc<crate::ir::Type>>, ::std::rc::Rc<crate::ir::Type>) -> ::std::rc::Rc<crate::ir::Type>;
+    fn mk_type_struct(::std::rc::Rc<crate::ir::SourceInfo>, ::std::rc::Rc<crate::ir::Ident>) -> ::std::rc::Rc<crate::ir::Type>;
+    fn mk_type_union(::std::rc::Rc<crate::ir::SourceInfo>, ::std::rc::Rc<crate::ir::Ident>) -> ::std::rc::Rc<crate::ir::Type>;
+    fn mk_type_typedef(::std::rc::Rc<crate::ir::SourceInfo>, ::std::rc::Rc<crate::ir::Ident>) -> ::std::rc::Rc<crate::ir::Type>;
+    fn mk_type_refine(::std::rc::Rc<crate::ir::SourceInfo>, ::std::rc::Rc<crate::ir::Type>, ::std::rc::Rc<crate::ir::Expr>) -> ::std::rc::Rc<crate::ir::Type>;
+    fn mk_type_refine_always(::std::rc::Rc<crate::ir::SourceInfo>, ::std::rc::Rc<crate::ir::Type>, ::std::rc::Rc<crate::ir::Expr>) -> ::std::rc::Rc<crate::ir::Type>;
+    fn mk_type_refine_uninit(::std::rc::Rc<crate::ir::SourceInfo>, ::std::rc::Rc<crate::ir::Type>, ::std::rc::Rc<crate::ir::Expr>) -> ::std::rc::Rc<crate::ir::Type>;
+    fn mk_type_refine_value(::std::rc::Rc<crate::ir::SourceInfo>, ::std::rc::Rc<crate::ir::Type>, u32, u32, &crate::hauntedc::SnippetMap) -> ::std::rc::Rc<crate::ir::Type>;
+    fn mk_type_plain(::std::rc::Rc<crate::ir::SourceInfo>, ::std::rc::Rc<crate::ir::Type>) -> ::std::rc::Rc<crate::ir::Type>;
+    fn mk_type_nullable(::std::rc::Rc<crate::ir::SourceInfo>, ::std::rc::Rc<crate::ir::Type>) -> ::std::rc::Rc<crate::ir::Type>;
+    fn mk_type_array(::std::rc::Rc<crate::ir::SourceInfo>, ::std::rc::Rc<crate::ir::Type>) -> ::std::rc::Rc<crate::ir::Type>;
+    fn mk_type_arrayptr(::std::rc::Rc<crate::ir::SourceInfo>, ::std::rc::Rc<crate::ir::Type>) -> ::std::rc::Rc<crate::ir::Type>;
+    fn mk_type_core_ref(::std::rc::Rc<crate::ir::SourceInfo>, ::std::rc::Rc<crate::ir::Type>) -> ::std::rc::Rc<crate::ir::Type>;
+    fn mk_type_err(::std::rc::Rc<crate::ir::SourceInfo>) -> ::std::rc::Rc<crate::ir::Type>;
 
-    fn mk_bigint(&str) -> Rc<BigInt>;
+    fn mk_bigint(&str) -> ::std::rc::Rc<::num_bigint::BigInt>;
 
-    fn mk_bool_lit(Rc<SourceInfo>, bool) -> Rc<Expr>;
-    fn mk_int_lit(Rc<SourceInfo>, Rc<BigInt>, Rc<Type>) -> Rc<Expr>;
-    fn mk_float_lit(Rc<SourceInfo>, Rc<str>, Rc<Type>) -> Rc<Expr>;
-    fn mk_rvalue_lvalue(Rc<SourceInfo>, Rc<Expr>) -> Rc<Expr>;
-    fn mk_rvalue_ref(Rc<SourceInfo>, Rc<Expr>) -> Rc<Expr>;
-    fn mk_rvalue_cast(Rc<SourceInfo>, Rc<Expr>, Rc<Type>) -> Rc<Expr>;
-    fn mk_rvalue_unop(Rc<SourceInfo>, UnOp, Rc<Expr>) -> Rc<Expr>;
-    fn mk_rvalue_binop(Rc<SourceInfo>, BinOp, Rc<Expr>, Rc<Expr>) -> Rc<Expr>;
-    fn mk_rvalue_fncall(Rc<SourceInfo>, Rc<Ident>, Vec<Rc<Expr>>) -> Rc<Expr>;
-    fn mk_rvalue_fnref(Rc<SourceInfo>, Rc<Ident>) -> Rc<Expr>;
-    fn mk_rvalue_fnptr_call(Rc<SourceInfo>, Rc<Expr>, Vec<Rc<Expr>>) -> Rc<Expr>;
-    fn mk_cast(Rc<SourceInfo>, Rc<Expr>, Rc<Type>) -> Rc<Expr>;
-    fn mk_container_of(Rc<SourceInfo>, Rc<Expr>, Rc<Type>, Rc<Ident>) -> Rc<Expr>;
-    fn mk_rvalue_err(Rc<SourceInfo>, Rc<Type>) -> Rc<Expr>;
-    fn mk_malloc(Rc<SourceInfo>, Rc<Type>) -> Rc<Expr>;
-    fn mk_malloc_array(Rc<SourceInfo>, Rc<Type>, Rc<Expr>) -> Rc<Expr>;
-    fn mk_calloc(Rc<SourceInfo>, Rc<Type>) -> Rc<Expr>;
-    fn mk_calloc_array(Rc<SourceInfo>, Rc<Type>, Rc<Expr>) -> Rc<Expr>;
-    fn mk_malloc_flex(Rc<SourceInfo>, Rc<Type>, Rc<Expr>) -> Rc<Expr>;
-    fn mk_calloc_flex(Rc<SourceInfo>, Rc<Type>, Rc<Expr>) -> Rc<Expr>;
-    fn mk_memset(Rc<SourceInfo>, Rc<Type>, Rc<Expr>, Rc<Expr>, Rc<Expr>) -> Rc<Expr>;
-    fn mk_memset_zero(Rc<SourceInfo>, Rc<Type>, Rc<Expr>) -> Rc<Expr>;
-    fn mk_free(Rc<SourceInfo>, Rc<Expr>) -> Rc<Expr>;
-    fn mk_pre_incr(Rc<SourceInfo>, Rc<Expr>) -> Rc<Expr>;
-    fn mk_post_incr(Rc<SourceInfo>, Rc<Expr>) -> Rc<Expr>;
-    fn mk_pre_decr(Rc<SourceInfo>, Rc<Expr>) -> Rc<Expr>;
-    fn mk_post_decr(Rc<SourceInfo>, Rc<Expr>) -> Rc<Expr>;
-    fn mk_cond(Rc<SourceInfo>, Rc<Expr>, Rc<Expr>, Rc<Expr>) -> Rc<Expr>;
-    fn mk_live(Rc<SourceInfo>, Rc<Expr>) -> Rc<Expr>;
-    fn mk_assign_expr(Rc<SourceInfo>, Rc<Expr>, Rc<Expr>) -> Rc<Expr>;
-    fn mk_sizeof(Rc<SourceInfo>, Rc<Type>) -> Rc<Expr>;
-    fn mk_alignof(Rc<SourceInfo>, Rc<Type>) -> Rc<Expr>;
+    fn mk_bool_lit(::std::rc::Rc<crate::ir::SourceInfo>, bool) -> ::std::rc::Rc<crate::ir::Expr>;
+    fn mk_int_lit(::std::rc::Rc<crate::ir::SourceInfo>, ::std::rc::Rc<::num_bigint::BigInt>, ::std::rc::Rc<crate::ir::Type>) -> ::std::rc::Rc<crate::ir::Expr>;
+    fn mk_float_lit(::std::rc::Rc<crate::ir::SourceInfo>, ::std::rc::Rc<str>, ::std::rc::Rc<crate::ir::Type>) -> ::std::rc::Rc<crate::ir::Expr>;
+    fn mk_rvalue_lvalue(::std::rc::Rc<crate::ir::SourceInfo>, ::std::rc::Rc<crate::ir::Expr>) -> ::std::rc::Rc<crate::ir::Expr>;
+    fn mk_rvalue_ref(::std::rc::Rc<crate::ir::SourceInfo>, ::std::rc::Rc<crate::ir::Expr>) -> ::std::rc::Rc<crate::ir::Expr>;
+    fn mk_rvalue_cast(::std::rc::Rc<crate::ir::SourceInfo>, ::std::rc::Rc<crate::ir::Expr>, ::std::rc::Rc<crate::ir::Type>) -> ::std::rc::Rc<crate::ir::Expr>;
+    fn mk_rvalue_unop(::std::rc::Rc<crate::ir::SourceInfo>, crate::ir::UnOp, ::std::rc::Rc<crate::ir::Expr>) -> ::std::rc::Rc<crate::ir::Expr>;
+    fn mk_rvalue_binop(::std::rc::Rc<crate::ir::SourceInfo>, crate::ir::BinOp, ::std::rc::Rc<crate::ir::Expr>, ::std::rc::Rc<crate::ir::Expr>) -> ::std::rc::Rc<crate::ir::Expr>;
+    fn mk_rvalue_fncall(::std::rc::Rc<crate::ir::SourceInfo>, ::std::rc::Rc<crate::ir::Ident>, ::std::vec::Vec<::std::rc::Rc<crate::ir::Expr>>) -> ::std::rc::Rc<crate::ir::Expr>;
+    fn mk_rvalue_fnref(::std::rc::Rc<crate::ir::SourceInfo>, ::std::rc::Rc<crate::ir::Ident>) -> ::std::rc::Rc<crate::ir::Expr>;
+    fn mk_rvalue_fnptr_call(::std::rc::Rc<crate::ir::SourceInfo>, ::std::rc::Rc<crate::ir::Expr>, ::std::vec::Vec<::std::rc::Rc<crate::ir::Expr>>) -> ::std::rc::Rc<crate::ir::Expr>;
+    fn mk_cast(::std::rc::Rc<crate::ir::SourceInfo>, ::std::rc::Rc<crate::ir::Expr>, ::std::rc::Rc<crate::ir::Type>) -> ::std::rc::Rc<crate::ir::Expr>;
+    fn mk_container_of(::std::rc::Rc<crate::ir::SourceInfo>, ::std::rc::Rc<crate::ir::Expr>, ::std::rc::Rc<crate::ir::Type>, ::std::rc::Rc<crate::ir::Ident>) -> ::std::rc::Rc<crate::ir::Expr>;
+    fn mk_rvalue_err(::std::rc::Rc<crate::ir::SourceInfo>, ::std::rc::Rc<crate::ir::Type>) -> ::std::rc::Rc<crate::ir::Expr>;
+    fn mk_malloc(::std::rc::Rc<crate::ir::SourceInfo>, ::std::rc::Rc<crate::ir::Type>) -> ::std::rc::Rc<crate::ir::Expr>;
+    fn mk_malloc_array(::std::rc::Rc<crate::ir::SourceInfo>, ::std::rc::Rc<crate::ir::Type>, ::std::rc::Rc<crate::ir::Expr>) -> ::std::rc::Rc<crate::ir::Expr>;
+    fn mk_calloc(::std::rc::Rc<crate::ir::SourceInfo>, ::std::rc::Rc<crate::ir::Type>) -> ::std::rc::Rc<crate::ir::Expr>;
+    fn mk_calloc_array(::std::rc::Rc<crate::ir::SourceInfo>, ::std::rc::Rc<crate::ir::Type>, ::std::rc::Rc<crate::ir::Expr>) -> ::std::rc::Rc<crate::ir::Expr>;
+    fn mk_malloc_flex(::std::rc::Rc<crate::ir::SourceInfo>, ::std::rc::Rc<crate::ir::Type>, ::std::rc::Rc<crate::ir::Expr>) -> ::std::rc::Rc<crate::ir::Expr>;
+    fn mk_calloc_flex(::std::rc::Rc<crate::ir::SourceInfo>, ::std::rc::Rc<crate::ir::Type>, ::std::rc::Rc<crate::ir::Expr>) -> ::std::rc::Rc<crate::ir::Expr>;
+    fn mk_memset(::std::rc::Rc<crate::ir::SourceInfo>, ::std::rc::Rc<crate::ir::Type>, ::std::rc::Rc<crate::ir::Expr>, ::std::rc::Rc<crate::ir::Expr>, ::std::rc::Rc<crate::ir::Expr>) -> ::std::rc::Rc<crate::ir::Expr>;
+    fn mk_memset_zero(::std::rc::Rc<crate::ir::SourceInfo>, ::std::rc::Rc<crate::ir::Type>, ::std::rc::Rc<crate::ir::Expr>) -> ::std::rc::Rc<crate::ir::Expr>;
+    fn mk_free(::std::rc::Rc<crate::ir::SourceInfo>, ::std::rc::Rc<crate::ir::Expr>) -> ::std::rc::Rc<crate::ir::Expr>;
+    fn mk_pre_incr(::std::rc::Rc<crate::ir::SourceInfo>, ::std::rc::Rc<crate::ir::Expr>) -> ::std::rc::Rc<crate::ir::Expr>;
+    fn mk_post_incr(::std::rc::Rc<crate::ir::SourceInfo>, ::std::rc::Rc<crate::ir::Expr>) -> ::std::rc::Rc<crate::ir::Expr>;
+    fn mk_pre_decr(::std::rc::Rc<crate::ir::SourceInfo>, ::std::rc::Rc<crate::ir::Expr>) -> ::std::rc::Rc<crate::ir::Expr>;
+    fn mk_post_decr(::std::rc::Rc<crate::ir::SourceInfo>, ::std::rc::Rc<crate::ir::Expr>) -> ::std::rc::Rc<crate::ir::Expr>;
+    fn mk_cond(::std::rc::Rc<crate::ir::SourceInfo>, ::std::rc::Rc<crate::ir::Expr>, ::std::rc::Rc<crate::ir::Expr>, ::std::rc::Rc<crate::ir::Expr>) -> ::std::rc::Rc<crate::ir::Expr>;
+    fn mk_live(::std::rc::Rc<crate::ir::SourceInfo>, ::std::rc::Rc<crate::ir::Expr>) -> ::std::rc::Rc<crate::ir::Expr>;
+    fn mk_assign_expr(::std::rc::Rc<crate::ir::SourceInfo>, ::std::rc::Rc<crate::ir::Expr>, ::std::rc::Rc<crate::ir::Expr>) -> ::std::rc::Rc<crate::ir::Expr>;
+    fn mk_sizeof(::std::rc::Rc<crate::ir::SourceInfo>, ::std::rc::Rc<crate::ir::Type>) -> ::std::rc::Rc<crate::ir::Expr>;
+    fn mk_alignof(::std::rc::Rc<crate::ir::SourceInfo>, ::std::rc::Rc<crate::ir::Type>) -> ::std::rc::Rc<crate::ir::Expr>;
 
-    fn mk_lvalue_var(Rc<SourceInfo>, Rc<Ident>) -> Rc<Expr>;
-    fn mk_lvalue_member(Rc<SourceInfo>, Rc<Expr>, Rc<Ident>) -> Rc<Expr>;
-    fn mk_index(Rc<SourceInfo>, Rc<Expr>, Rc<Expr>) -> Rc<Expr>;
-    fn mk_deref(Rc<SourceInfo>, Rc<Expr>) -> Rc<Expr>;
-    fn mk_lvalue_err(Rc<SourceInfo>, Rc<Type>) -> Rc<Expr>;
+    fn mk_lvalue_var(::std::rc::Rc<crate::ir::SourceInfo>, ::std::rc::Rc<crate::ir::Ident>) -> ::std::rc::Rc<crate::ir::Expr>;
+    fn mk_lvalue_member(::std::rc::Rc<crate::ir::SourceInfo>, ::std::rc::Rc<crate::ir::Expr>, ::std::rc::Rc<crate::ir::Ident>) -> ::std::rc::Rc<crate::ir::Expr>;
+    fn mk_index(::std::rc::Rc<crate::ir::SourceInfo>, ::std::rc::Rc<crate::ir::Expr>, ::std::rc::Rc<crate::ir::Expr>) -> ::std::rc::Rc<crate::ir::Expr>;
+    fn mk_deref(::std::rc::Rc<crate::ir::SourceInfo>, ::std::rc::Rc<crate::ir::Expr>) -> ::std::rc::Rc<crate::ir::Expr>;
+    fn mk_lvalue_err(::std::rc::Rc<crate::ir::SourceInfo>, ::std::rc::Rc<crate::ir::Type>) -> ::std::rc::Rc<crate::ir::Expr>;
 
-    fn mk_var_decl(Rc<SourceInfo>, Rc<Ident>, Rc<Type>) -> Rc<Stmt>;
-    fn mk_let_stmt(Rc<SourceInfo>, Rc<Ident>, Rc<Type>, Rc<Expr>) -> Rc<Stmt>;
-    fn mk_decl_stack_array(Rc<SourceInfo>, Rc<Ident>, Rc<Type>, Rc<Expr>) -> Rc<Stmt>;
-    fn mk_assign(Rc<SourceInfo>, Rc<Expr>, Rc<Expr>) -> Rc<Stmt>;
-    fn mk_return(Rc<SourceInfo>, Rc<Expr>) -> Rc<Stmt>;
-    fn mk_return_void(Rc<SourceInfo>) -> Rc<Stmt>;
-    fn mk_call(Rc<SourceInfo>, Rc<Expr>) -> Rc<Stmt>;
-    fn mk_if(Rc<SourceInfo>, Rc<Expr>, Vec<Rc<Stmt>>, Vec<Rc<Stmt>>, Vec<Rc<Expr>>) -> Rc<Stmt>;
-    fn mk_match_branch(Vec<Rc<Expr>>, Vec<Rc<Stmt>>) -> Rc<MatchBranch>;
-    fn mk_match(Rc<SourceInfo>, Rc<Expr>, Vec<Rc<MatchBranch>>, Vec<Rc<Stmt>>, Vec<Rc<Expr>>) -> Rc<Stmt>;
-    fn mk_while(Rc<SourceInfo>, Rc<Expr>, Vec<Rc<Expr>>, Vec<Rc<Expr>>, Vec<Rc<Expr>>, Vec<Rc<Stmt>>) -> Rc<Stmt>;
-    fn mk_break(Rc<SourceInfo>) -> Rc<Stmt>;
-    fn mk_continue(Rc<SourceInfo>) -> Rc<Stmt>;
-    fn mk_stmt_err(Rc<SourceInfo>) -> Rc<Stmt>;
-    fn mk_assert(Rc<SourceInfo>, Rc<Expr>) -> Rc<Stmt>;
-    fn mk_goto(Rc<SourceInfo>, Rc<Ident>) -> Rc<Stmt>;
-    fn mk_label(Rc<SourceInfo>, Rc<Ident>, Vec<Rc<Expr>>) -> Rc<Stmt>;
+    fn mk_var_decl(::std::rc::Rc<crate::ir::SourceInfo>, ::std::rc::Rc<crate::ir::Ident>, ::std::rc::Rc<crate::ir::Type>) -> ::std::rc::Rc<crate::ir::Stmt>;
+    fn mk_let_stmt(::std::rc::Rc<crate::ir::SourceInfo>, ::std::rc::Rc<crate::ir::Ident>, ::std::rc::Rc<crate::ir::Type>, ::std::rc::Rc<crate::ir::Expr>) -> ::std::rc::Rc<crate::ir::Stmt>;
+    fn mk_decl_stack_array(::std::rc::Rc<crate::ir::SourceInfo>, ::std::rc::Rc<crate::ir::Ident>, ::std::rc::Rc<crate::ir::Type>, ::std::rc::Rc<crate::ir::Expr>) -> ::std::rc::Rc<crate::ir::Stmt>;
+    fn mk_assign(::std::rc::Rc<crate::ir::SourceInfo>, ::std::rc::Rc<crate::ir::Expr>, ::std::rc::Rc<crate::ir::Expr>) -> ::std::rc::Rc<crate::ir::Stmt>;
+    fn mk_return(::std::rc::Rc<crate::ir::SourceInfo>, ::std::rc::Rc<crate::ir::Expr>) -> ::std::rc::Rc<crate::ir::Stmt>;
+    fn mk_return_void(::std::rc::Rc<crate::ir::SourceInfo>) -> ::std::rc::Rc<crate::ir::Stmt>;
+    fn mk_call(::std::rc::Rc<crate::ir::SourceInfo>, ::std::rc::Rc<crate::ir::Expr>) -> ::std::rc::Rc<crate::ir::Stmt>;
+    fn mk_if(::std::rc::Rc<crate::ir::SourceInfo>, ::std::rc::Rc<crate::ir::Expr>, ::std::vec::Vec<::std::rc::Rc<crate::ir::Stmt>>, ::std::vec::Vec<::std::rc::Rc<crate::ir::Stmt>>, ::std::vec::Vec<::std::rc::Rc<crate::ir::Expr>>) -> ::std::rc::Rc<crate::ir::Stmt>;
+    fn mk_match_branch(::std::vec::Vec<::std::rc::Rc<crate::ir::Expr>>, ::std::vec::Vec<::std::rc::Rc<crate::ir::Stmt>>) -> ::std::rc::Rc<crate::ir::MatchBranch>;
+    fn mk_match(::std::rc::Rc<crate::ir::SourceInfo>, ::std::rc::Rc<crate::ir::Expr>, ::std::vec::Vec<::std::rc::Rc<crate::ir::MatchBranch>>, ::std::vec::Vec<::std::rc::Rc<crate::ir::Stmt>>, ::std::vec::Vec<::std::rc::Rc<crate::ir::Expr>>) -> ::std::rc::Rc<crate::ir::Stmt>;
+    fn mk_while(::std::rc::Rc<crate::ir::SourceInfo>, ::std::rc::Rc<crate::ir::Expr>, ::std::vec::Vec<::std::rc::Rc<crate::ir::Expr>>, ::std::vec::Vec<::std::rc::Rc<crate::ir::Expr>>, ::std::vec::Vec<::std::rc::Rc<crate::ir::Expr>>, ::std::vec::Vec<::std::rc::Rc<crate::ir::Stmt>>) -> ::std::rc::Rc<crate::ir::Stmt>;
+    fn mk_break(::std::rc::Rc<crate::ir::SourceInfo>) -> ::std::rc::Rc<crate::ir::Stmt>;
+    fn mk_continue(::std::rc::Rc<crate::ir::SourceInfo>) -> ::std::rc::Rc<crate::ir::Stmt>;
+    fn mk_stmt_err(::std::rc::Rc<crate::ir::SourceInfo>) -> ::std::rc::Rc<crate::ir::Stmt>;
+    fn mk_assert(::std::rc::Rc<crate::ir::SourceInfo>, ::std::rc::Rc<crate::ir::Expr>) -> ::std::rc::Rc<crate::ir::Stmt>;
+    fn mk_goto(::std::rc::Rc<crate::ir::SourceInfo>, ::std::rc::Rc<crate::ir::Ident>) -> ::std::rc::Rc<crate::ir::Stmt>;
+    fn mk_label(::std::rc::Rc<crate::ir::SourceInfo>, ::std::rc::Rc<crate::ir::Ident>, ::std::vec::Vec<::std::rc::Rc<crate::ir::Expr>>) -> ::std::rc::Rc<crate::ir::Stmt>;
 }
 
 extern "C++" {
-    safe fn parse_file(&mut crate::clang::Ctx);
+    fn parse_file(&mut crate::clang::Ctx);
 }

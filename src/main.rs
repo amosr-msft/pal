@@ -1,3 +1,5 @@
+#![cfg_attr(pal_nightly_let_chains, feature(let_chains))]
+
 use std::{
     collections::HashSet,
     path::{Path, PathBuf},

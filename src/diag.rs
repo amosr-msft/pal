@@ -110,13 +110,10 @@ impl Diagnostics {
             d = d.with_message(&diag.msg);
             let file_name = &*diag.loc.file_name;
             let file_id = *file_ids.entry(file_name).or_insert_with(|| {
-                files.add(
-                    file_name,
-                    match vfs.read_vfs_file(file_name) {
-                        Ok(entry) => entry.contents.clone(),
-                        Err(_) => "".to_string(),
-                    },
-                )
+                files.add(file_name, match vfs.read_vfs_file(file_name) {
+                    Ok(entry) => entry.contents.clone(),
+                    Err(_) => "".to_string(),
+                })
             });
             let pos_to_byte = |pos: Position| {
                 files

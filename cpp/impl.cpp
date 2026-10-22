@@ -17,9 +17,13 @@ using rust::Ref;
 using rust::RefMut;
 using rust::std::rc::Rc;
 using rust::std::vec::Vec;
-using namespace rust::pal::clang;
-namespace ir = rust::pal::ir;
+using namespace rust::crate::clang;
+namespace ir = rust::crate::ir;
 using OptExpr = rust::core::option::Option<Rc<ir::Expr>>;
+
+Ref<rust::Str> operator""_rs(const char *str, size_t len) {
+  return str_from_parts(reinterpret_cast<const uint8_t *>(str), len);
+}
 
 llvm::StringRef toStringRef(Ref<rust::Str> str) {
   return llvm::StringRef((char const *)str.as_ptr(), str.len());
@@ -72,8 +76,8 @@ static bool hasTopLevelBreak(const Stmt *s) {
   return false;
 }
 
-using SnipMap = rust::pal::hauntedc::SnippetMap;
-using TargetIntWidths = rust::pal::hauntedc::TargetIntWidths;
+using SnipMap = rust::crate::hauntedc::SnippetMap;
+using TargetIntWidths = rust::crate::hauntedc::TargetIntWidths;
 
 template <> struct std::hash<FileID> {
   std::size_t operator()(FileID const &s) const noexcept {
@@ -3792,7 +3796,7 @@ std::string getResourcesPath() {
   return GetResourcesPath(getBinaryForResourcesPath());
 }
 
-llvm::vfs::Status mkStatus(Ref<rust::pal::vfs::VFSEntry> entry) {
+llvm::vfs::Status mkStatus(Ref<rust::crate::vfs::VFSEntry> entry) {
   auto fileName = entry.get_file_name();
   llvm::sys::fs::UniqueID unique(0, (uint64_t)fileName.as_ptr());
   llvm::sys::TimePoint<> time;
@@ -3802,10 +3806,10 @@ llvm::vfs::Status mkStatus(Ref<rust::pal::vfs::VFSEntry> entry) {
 }
 
 class CtxVFSFile : public llvm::vfs::File {
-  Rc<rust::pal::vfs::VFSEntry> entry;
+  Rc<rust::crate::vfs::VFSEntry> entry;
 
 public:
-  CtxVFSFile(Rc<rust::pal::vfs::VFSEntry> &&e) : entry(std::move(e)) {}
+  CtxVFSFile(Rc<rust::crate::vfs::VFSEntry> &&e) : entry(std::move(e)) {}
 
   llvm::ErrorOr<llvm::vfs::Status> status() override {
     return mkStatus(entry.deref());
