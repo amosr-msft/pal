@@ -951,10 +951,13 @@ fn declare_implicit_structs(tu: &mut TranslationUnit) {
             val: name,
             loc: loc.clone(),
         });
-        tu.decls.insert(0, Ast {
-            loc: loc.clone(),
-            val: DeclT::StructDecl(ident),
-        });
+        tu.decls.insert(
+            0,
+            Ast {
+                loc: loc.clone(),
+                val: DeclT::StructDecl(ident),
+            },
+        );
     }
 }
 

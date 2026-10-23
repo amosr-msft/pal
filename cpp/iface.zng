@@ -19,7 +19,6 @@ type bool {
     wellknown_traits(Copy);
 }
 
-
 type ::std::rc::Rc<str> {
     #layout(size=16, align=8);
     fn deref(&self) -> &str;

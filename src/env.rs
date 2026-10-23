@@ -202,10 +202,13 @@ impl Env {
     }
 
     pub fn push_var_decl(&mut self, ident: &Ident, ty: Rc<Type>, is_rvalue: LocalDeclKind) {
-        self.locals.insert(ident.val.clone(), LocalDecl {
-            ty,
-            kind: is_rvalue,
-        });
+        self.locals.insert(
+            ident.val.clone(),
+            LocalDecl {
+                ty,
+                kind: is_rvalue,
+            },
+        );
     }
 
     pub fn push_arg(&mut self, arg: &FnArg, is_rvalue: LocalDeclKind) {
@@ -368,19 +371,25 @@ impl Env {
 
     pub fn push_this(&mut self, ty: Rc<Type>) -> Rc<IdentT> {
         let id: Rc<IdentT> = Rc::from("this");
-        self.locals.insert(id.clone(), LocalDecl {
-            ty,
-            kind: LocalDeclKind::RValue,
-        });
+        self.locals.insert(
+            id.clone(),
+            LocalDecl {
+                ty,
+                kind: LocalDeclKind::RValue,
+            },
+        );
         id
     }
 
     pub fn push_return(&mut self, ty: Rc<Type>) -> Rc<IdentT> {
         let id: Rc<IdentT> = Rc::from("return");
-        self.locals.insert(id.clone(), LocalDecl {
-            ty,
-            kind: LocalDeclKind::RValue,
-        });
+        self.locals.insert(
+            id.clone(),
+            LocalDecl {
+                ty,
+                kind: LocalDeclKind::RValue,
+            },
+        );
         id
     }
 

@@ -612,10 +612,13 @@ fn mk_bool_type(loc: Rc<SourceInfo>) -> Rc<Type> {
     mk_ast(loc, TypeT::Bool)
 }
 fn mk_int_type(loc: Rc<SourceInfo>, signed: bool, width: u32) -> Rc<Type> {
-    mk_ast(loc, TypeT::Int {
-        signed: signed,
-        width: width,
-    })
+    mk_ast(
+        loc,
+        TypeT::Int {
+            signed: signed,
+            width: width,
+        },
+    )
 }
 fn mk_float_type(loc: Rc<SourceInfo>, width: u32) -> Rc<Type> {
     mk_ast(loc, TypeT::Float { width })
@@ -920,11 +923,14 @@ fn mk_decl_stack_array(
     elem_type: Rc<Type>,
     size: Rc<Expr>,
 ) -> Rc<Stmt> {
-    mk_ast(loc, StmtT::DeclStackArray {
-        name,
-        elem_type,
-        size,
-    })
+    mk_ast(
+        loc,
+        StmtT::DeclStackArray {
+            name,
+            elem_type,
+            size,
+        },
+    )
 }
 fn mk_assign(loc: Rc<SourceInfo>, lhs: Rc<Expr>, rhs: Rc<Expr>) -> Rc<Stmt> {
     mk_ast(loc, StmtT::Assign(lhs, rhs))

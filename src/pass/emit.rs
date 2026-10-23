@@ -366,10 +366,13 @@ impl<'a> RenderAnnotated<'a, Annotation> for StrWriter {
 
     fn pop_annotation(&mut self) -> Result<(), Self::Error> {
         let (loc, start) = self.annotation_stack.pop().unwrap();
-        self.source_range_map.push((loc.location().clone(), Range {
-            start,
-            end: self.cur_pos(),
-        }));
+        self.source_range_map.push((
+            loc.location().clone(),
+            Range {
+                start,
+                end: self.cur_pos(),
+            },
+        ));
         Ok(())
     }
 }
@@ -3175,10 +3178,13 @@ impl<'a> Emitter<'a> {
                             TypeT::FixedArray(_, _),
                             TypeT::Pointer(_, PointerKind::Ref | PointerKind::Unknown),
                         ) => {
-                            let fn_name = if matches!(&val.val, ExprT::ArrayInit {
-                                is_static: true,
-                                ..
-                            }) {
+                            let fn_name = if matches!(
+                                &val.val,
+                                ExprT::ArrayInit {
+                                    is_static: true,
+                                    ..
+                                }
+                            ) {
                                 // String literals have static storage duration,
                                 // unlike local fixed-size arrays.
                                 "Pulse.Lib.C.Array.array_literal_to_ref"
